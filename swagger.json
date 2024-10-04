@@ -1,0 +1,203 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Express API with SQLite and OpenAPI",
+    "version": "1.0.0",
+    "description": "A simple CRUD API using Express, SQLite, and documented with OpenAPI"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/api/greetings": {
+      "get": {
+        "summary": "Retrieve a list of greetings.",
+        "tags": [
+          "Greetings"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of greetings.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Greeting"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new greeting.",
+        "tags": [
+          "Greetings"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Greeting"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Greeting created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Greeting"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/api/greetings/{id}": {
+      "get": {
+        "summary": "Get a greeting by ID.",
+        "tags": [
+          "Greetings"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "The greeting ID."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The greeting description by ID.",
+            "contents": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Greeting"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Greeting not found."
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a greeting by ID.",
+        "tags": [
+          "Greetings"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "The greeting ID."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Greeting"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Greeting updated successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Greeting"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          },
+          "404": {
+            "description": "Greeting not found."
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a greeting by ID.",
+        "tags": [
+          "Greetings"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "The greeting ID."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Greeting deleted successfully."
+          },
+          "404": {
+            "description": "Greeting not found."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Greeting": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The auto-generated id of the greeting."
+          },
+          "message": {
+            "type": "string",
+            "description": "The greeting message."
+          }
+        },
+        "example": {
+          "id": 1,
+          "message": "Hello, world!"
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Greetings",
+      "description": "API to manage greetings."
+    }
+  ]
+}
